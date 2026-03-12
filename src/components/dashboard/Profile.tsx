@@ -1,0 +1,116 @@
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { User, Mail, Phone, Shield, Bell, Moon, LogOut, ChevronRight, Edit3, Camera } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+const Profile = () => {
+    const navigate = useNavigate();
+    const userStr = localStorage.getItem('user');
+    const user = userStr ? JSON.parse(userStr) : null;
+
+    const firstName = user?.user_metadata?.first_name || user?.email?.split('@')[0] || 'User';
+    const lastName = user?.user_metadata?.last_name || '';
+    const email = user?.email || 'user@example.com';
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        navigate('/');
+    };
+
+    return (
+        <div className="max-w-4xl mx-auto space-y-8 pb-20">
+            <div>
+                <h1 className="text-3xl font-black text-slate-900 tracking-tight">My Profile</h1>
+                <p className="text-slate-500 font-medium">Manage your personal information and preferences.</p>
+            </div>
+
+            <div className="bg-white rounded-[3rem] border border-slate-100 shadow-xl shadow-sky-900/5 p-10">
+                <div className="flex flex-col md:flex-row items-center gap-10">
+                    <div className="relative group">
+                        <div className="w-32 h-32 rounded-[2.5rem] bg-gradient-to-br from-sky-400 to-teal-400 flex items-center justify-center text-white text-4xl font-black shadow-xl shadow-sky-500/20">
+                            {firstName[0]}{lastName[0] || ''}
+                        </div>
+                        <button className="absolute -bottom-2 -right-2 p-3 rounded-2xl bg-slate-900 text-white shadow-lg group-hover:scale-110 transition-transform">
+                            <Camera size={18} />
+                        </button>
+                    </div>
+
+                    <div className="flex-1 text-center md:text-left">
+                        <h2 className="text-3xl font-black text-slate-900">{firstName} {lastName}</h2>
+                        <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-1 flex items-center justify-center md:justify-start gap-2">
+                            <Shield size={12} className="text-teal-500" /> Verified Premium Member
+                        </p>
+                        <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-3">
+                            <button className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-slate-900 text-white font-black text-xs uppercase tracking-wider hover:bg-sky-600 transition-all">
+                                <Edit3 size={14} /> Edit Profile
+                            </button>
+                            <button
+                                onClick={handleLogout}
+                                className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white border border-slate-200 text-rose-500 font-black text-xs uppercase tracking-wider hover:border-rose-100 hover:bg-rose-50 transition-all"
+                            >
+                                <LogOut size={14} /> Logout Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 space-y-6">
+                    <h3 className="text-xl font-black text-slate-900 tracking-tight">Contact Information</h3>
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-4 p-4 rounded-3xl bg-slate-50 border border-slate-100/50">
+                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-sky-500 shadow-sm">
+                                <Mail size={18} />
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Address</p>
+                                <p className="font-bold text-slate-700 text-sm">{email}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-4 p-4 rounded-3xl bg-slate-50 border border-slate-100/50">
+                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-500 shadow-sm">
+                                <Phone size={18} />
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Phone Number</p>
+                                <p className="font-bold text-slate-700 text-sm">+91-98765 43210</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 space-y-6">
+                    <h3 className="text-xl font-black text-slate-900 tracking-tight">App Settings</h3>
+                    <div className="space-y-3">
+                        {[
+                            { label: 'Push Notifications', icon: <Bell size={18} />, color: 'text-amber-500', enabled: true },
+                            { label: 'Dark Mode', icon: <Moon size={18} />, color: 'text-violet-500', enabled: false },
+                            { label: 'Privacy Policy', icon: <Shield size={18} />, color: 'text-teal-500', enabled: null },
+                        ].map((item) => (
+                            <div key={item.label} className="flex items-center justify-between p-4 rounded-3xl bg-slate-50 border border-slate-100/50 group hover:border-sky-200 transition-all cursor-pointer">
+                                <div className="flex items-center gap-4">
+                                    <div className={`w-10 h-10 rounded-xl bg-white flex items-center justify-center ${item.color} shadow-sm group-hover:scale-110 transition-transform`}>
+                                        {item.icon}
+                                    </div>
+                                    <span className="font-bold text-slate-700 text-sm">{item.label}</span>
+                                </div>
+                                {item.enabled !== null ? (
+                                    <div className={`w-12 h-6 rounded-full p-1 transition-colors ${item.enabled ? 'bg-sky-500' : 'bg-slate-200'}`}>
+                                        <div className={`w-4 h-4 bg-white rounded-full transition-transform ${item.enabled ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                                    </div>
+                                ) : (
+                                    <ChevronRight size={18} className="text-slate-300" />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Profile;
