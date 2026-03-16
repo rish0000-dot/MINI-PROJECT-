@@ -36,6 +36,12 @@ export default function LoginModal({ initialTab, onClose }: { initialTab: "login
     useEffect(() => {
         setShowPassword(false);
         setAgreed(false);
+        setError("");
+        // Clear all fields on tab change to prevent data bleed
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
     }, [tab]);
 
     const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

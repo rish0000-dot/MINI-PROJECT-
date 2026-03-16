@@ -1,12 +1,11 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate, Routes, Route, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-    LogOut, User, Activity, Calendar, Shield, Search,
-    MapPin, Bell, Menu, X, Building2, MessageCircle,
-    ArrowRight, Star, Zap, Droplets, Microscope,
-    Scan, Smile, CheckCircle2, FileText
+    LogOut, User, Activity, Calendar,
+    MapPin, Bell, Menu, Building2, MessageCircle,
+    FileText, Search, RefreshCw
 } from 'lucide-react';
 
 import DashboardHome from '../components/dashboard/DashboardHome';
@@ -16,12 +15,21 @@ import Appointments from '../components/dashboard/Appointments';
 import AIAssistant from '../components/dashboard/AIAssistant';
 import Profile from '../components/dashboard/Profile';
 import Documents from '../components/dashboard/Documents';
+import { useJsApiLoader } from '@react-google-maps/api';
+
+const LIBRARIES: ("places" | "drawing" | "geometry" | "visualization")[] = ["places"];
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [isMobile, setIsMobile] = useState(false);
+    const [cityName, setCityName] = useState('Fetching...');
+
+    const { isLoaded } = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "",
+        libraries: LIBRARIES
+    });
 
     const userStr = localStorage.getItem('user');
     let user = null;
@@ -36,7 +44,6 @@ const Dashboard = () => {
     useEffect(() => {
         const handleResize = () => {
             const mobile = window.innerWidth < 1024;
-            setIsMobile(mobile);
             if (mobile) setIsSidebarOpen(false);
             else setIsSidebarOpen(true);
         };
@@ -44,6 +51,47 @@ const Dashboard = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    const updateLocation = () => {
+        if (isLoaded) {
+            setCityName('Detecting...');
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const geocoder = new google.maps.Geocoder();
+                        const latlng = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        geocoder.geocode({ location: latlng }, (results, status) => {
+                            if (status === "OK" && results?.[0]) {
+                                const city = results[0].address_components.find(
+                                    comp => comp.types.includes("locality") || comp.types.includes("administrative_area_level_2")
+                                )?.long_name || "Unknown";
+                                const country = results[0].address_components.find(
+                                    comp => comp.types.includes("country")
+                                )?.long_name || "";
+                                setCityName(`${city}, ${country}`);
+                            } else {
+                                setCityName('Mathura, India');
+                            }
+                        });
+                    },
+                    (error) => {
+                        console.error("Geolocation error:", error);
+                        setCityName('Mathura, India');
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            } else {
+                setCityName('Mathura, India');
+            }
+        }
+    };
+
+    useEffect(() => {
+        updateLocation();
+    }, [isLoaded]);
 
     useEffect(() => {
         if (!localStorage.getItem('token')) {
@@ -128,10 +176,17 @@ const Dashboard = () => {
                         </button>
                         <div className="hidden md:block">
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5 leading-none">Your Location</p>
-                            <div className="flex items-center gap-1.5 cursor-pointer group">
+                            <div className="flex items-center gap-1.5 group">
                                 <MapPin size={14} className="text-sky-500" />
-                                <span className="text-xs font-black text-slate-900 group-hover:text-sky-600 transition-colors">Delhi, India</span>
-                                <span className="text-[10px] bg-sky-50 text-sky-600 px-1.5 py-0.5 rounded font-black uppercase">Change</span>
+                                <span className="text-xs font-black text-slate-900 uppercase tracking-tight">{cityName}</span>
+                                <button 
+                                    onClick={updateLocation}
+                                    className="p-1 hover:bg-slate-100 rounded-md transition-colors text-slate-400 hover:text-sky-600"
+                                    title="Refresh location"
+                                >
+                                    <RefreshCw size={12} className={cityName === 'Detecting...' ? 'animate-spin' : ''} />
+                                </button>
+                                <span className="text-[10px] bg-sky-50 text-sky-600 px-1.5 py-0.5 rounded font-black uppercase">Live</span>
                             </div>
                         </div>
                     </div>
