@@ -124,6 +124,7 @@ export default function EditProfileModal({ onClose, currentProfile, onProfileUpd
 
             // Success
             onProfileUpdate();
+            window.dispatchEvent(new Event('profile-updated'));
             handleClose();
 
         } catch (err: any) {

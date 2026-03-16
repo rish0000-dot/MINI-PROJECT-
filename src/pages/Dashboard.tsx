@@ -49,20 +49,23 @@ const Dashboard = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        const fetchProfile = async () => {
-            if (user?.id) {
-                const { data } = await supabase.from('profiles').select('username').eq('id', user.id).single();
-                if (data) setUserProfile(data);
-            }
-        };
+    const fetchProfile = async () => {
+        if (user?.id) {
+            const { data } = await supabase.from('profiles').select('username, avatar_url, first_name').eq('id', user.id).single();
+            if (data) setUserProfile(data);
+        }
+    };
 
+    useEffect(() => {
         if (!localStorage.getItem('token')) {
             navigate('/');
         } else {
             fetchProfile();
         }
-    }, [navigate]);
+
+        window.addEventListener('profile-updated', fetchProfile);
+        return () => window.removeEventListener('profile-updated', fetchProfile);
+    }, [navigate, user?.id]);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -180,13 +183,19 @@ const Dashboard = () => {
 
                         <div className="flex items-center gap-3 pl-2 sm:pl-4 group cursor-pointer" onClick={() => navigate('/dashboard/profile')}>
                             <div className="hidden text-right lg:block">
-                                <p className="text-xs font-black text-slate-900 leading-none mb-1">{firstName}</p>
+                                <p className="text-xs font-black text-slate-900 leading-none mb-1">
+                                    {userProfile?.first_name || firstName}
+                                </p>
                                 <p className="text-[10px] font-bold text-medical-green leading-none">
                                     {userProfile?.username ? `ID: ${userProfile.username}` : 'Update Profile to get ID'}
                                 </p>
                             </div>
                             <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-[1.2rem] bg-gradient-to-br from-medical-blue to-medical-green border-2 border-white shadow-lg overflow-hidden flex items-center justify-center text-white font-black text-sm group-hover:scale-105 group-hover:shadow-medical-blue/20 transition-all">
-                                {firstName?.[0] || 'U'}
+                                {userProfile?.avatar_url ? (
+                                    <img src={userProfile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+                                ) : (
+                                    firstName?.[0] || 'U'
+                                )}
                             </div>
                         </div>
                     </div>
