@@ -7,6 +7,7 @@ import {
     MessageCircle, ChevronRight, ExternalLink, MapPin
 } from 'lucide-react';
 import { HOSPITALS, DOCTORS } from '../../lib/mockData';
+import { REAL_HOSPITALS } from '../../lib/realHospitalData';
 import BookingModal from './BookingModal';
 import { useJsApiLoader } from '@react-google-maps/api';
 
@@ -28,10 +29,12 @@ const HospitalDetail = () => {
 
     React.useEffect(() => {
         if (isLoaded && id) {
-            // Check if it's a mock hospital first
-            const mock = HOSPITALS.find(h => h.id === id);
-            if (mock) {
-                setHospital(mock);
+            // Check if it's a researched or mock hospital first
+            const combinedBase = [...REAL_HOSPITALS, ...HOSPITALS];
+            const baseHospital = combinedBase.find(h => h.id === id);
+            
+            if (baseHospital) {
+                setHospital(baseHospital);
                 setIsLoading(false);
                 return;
             }

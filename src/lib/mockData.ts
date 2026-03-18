@@ -34,7 +34,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'cims-mathura',
         name: 'City Institute of Medical Sciences (CIMS Hospital)',
-        image: 'https://images.unsplash.com/photo-1587350859743-4f5033832bd3?auto=format&fit=crop&q=80&w=1000&sig=1',
+        image: 'https://images.unsplash.com/photo-1586773860418-d372a676f015?auto=format&fit=crop&q=80&w=1000&sig=cims',
         address: 'Masani Road, Mathura',
         coordinates: { lat: 27.5090, lng: 77.6750 },
         rating: 4.8,
@@ -50,7 +50,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'neuro-mathura',
         name: 'Mathura Neuro Super Speciality Hospital',
-        image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000&sig=2',
+        image: 'https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&q=80&w=1000&sig=neuro',
         address: 'Radhika Vihar, Mathura',
         coordinates: { lat: 27.4850, lng: 77.6620 },
         rating: 4.9,
@@ -66,7 +66,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'pr-hospital',
         name: 'P R Hospital',
-        image: 'https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&q=80&w=1000&sig=3',
+        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000&sig=pr',
         address: 'Shivaji Nagar, Mathura',
         coordinates: { lat: 27.4910, lng: 77.6850 },
         rating: 4.6,
@@ -82,7 +82,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'aarogya-plus',
         name: 'Aarogya Plus Multisuperspeciality Hospital',
-        image: 'https://images.unsplash.com/photo-1538108115994-9307f77e162c?auto=format&fit=crop&q=80&w=1000&sig=4',
+        image: 'https://images.unsplash.com/photo-1576091160550-217359f4ecf8?auto=format&fit=crop&q=80&w=1000&sig=aarogya',
         address: 'Govardhan Chauraha, Mathura',
         coordinates: { lat: 27.4820, lng: 77.6520 },
         rating: 4.7,
@@ -98,7 +98,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'radheyshyam-hosp',
         name: 'Radheyshyam Hospital',
-        image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=1000&sig=5',
+        image: 'https://images.unsplash.com/photo-1504439468489-c8920d796a29?auto=format&fit=crop&q=80&w=1000&sig=radheyshyam',
         address: 'Bhuteshwar Road, Mathura',
         coordinates: { lat: 27.5020, lng: 77.6650 },
         rating: 4.5,
@@ -114,7 +114,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'shri-om-hosp',
         name: 'Shri Om Hospital',
-        image: 'https://images.unsplash.com/photo-1511174511547-4325c2763567?auto=format&fit=crop&q=80&w=1000&sig=6',
+        image: 'https://images.unsplash.com/photo-1511174511547-4325c2763567?auto=format&fit=crop&q=80&w=1000&sig=shriom',
         address: 'Manoharpura, Mathura',
         coordinates: { lat: 27.5150, lng: 77.6950 },
         rating: 4.6,
@@ -130,7 +130,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'global-plus',
         name: 'Global Plus Hospital',
-        image: 'https://images.unsplash.com/photo-1504439468489-c8920d796a29?auto=format&fit=crop&q=80&w=1000&sig=7',
+        image: 'https://images.unsplash.com/photo-1511174511547-4325c2763567?auto=format&fit=crop&q=80&w=1000',
         address: 'Govardhan Chauraha, Mathura',
         coordinates: { lat: 27.4815, lng: 77.6530 },
         rating: 4.4,
@@ -146,7 +146,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'asha-hosp',
         name: 'Asha Hospital',
-        image: 'https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?auto=format&fit=crop&q=80&w=1000&sig=8',
+        image: 'https://images.unsplash.com/photo-1504439468489-c8920d796a29?auto=format&fit=crop&q=80&w=1000',
         address: 'Maholi Road, Mathura',
         coordinates: { lat: 27.4750, lng: 77.6820 },
         rating: 4.5,
@@ -162,7 +162,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'refinery-hosp',
         name: 'Mathura Refinery Hospital',
-        image: 'https://images.unsplash.com/photo-1576091160550-217359f4ecf8?auto=format&fit=crop&q=80&w=1000&sig=9',
+        image: 'https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?auto=format&fit=crop&q=80&w=1000',
         address: 'Refinery Township, Mathura',
         coordinates: { lat: 27.4050, lng: 77.6850 },
         rating: 4.7,
@@ -178,7 +178,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'district-hosp',
         name: 'District Hospital Mathura',
-        image: 'https://images.unsplash.com/photo-1596541223130-5d31a73fb6c6?auto=format&fit=crop&q=80&w=1000&sig=10',
+        image: 'https://images.unsplash.com/photo-1576091160550-217359f4ecf8?auto=format&fit=crop&q=80&w=1000',
         address: 'Choubey Para, Mathura',
         coordinates: { lat: 27.4950, lng: 77.7050 },
         rating: 4.2,
@@ -194,7 +194,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'kd-dental',
         name: 'KD Dental College & Hospital',
-        image: 'https://images.unsplash.com/photo-1629909608185-42f4b7174401?auto=format&fit=crop&q=80&w=1000&sig=11',
+        image: 'https://images.unsplash.com/photo-1596541223130-5d31a73fb6c6?auto=format&fit=crop&q=80&w=1000',
         address: 'NH-2, Mathura',
         coordinates: { lat: 27.5350, lng: 77.6550 },
         rating: 4.6,
@@ -210,7 +210,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'saraswati-hosp',
         name: 'Maa Saraswati Hospital',
-        image: 'https://images.unsplash.com/photo-1626307416562-ee83332468f7?auto=format&fit=crop&q=80&w=1000&sig=12',
+        image: 'https://images.unsplash.com/photo-1629909608185-42f4b7174401?auto=format&fit=crop&q=80&w=1000',
         address: 'Vrindavan Road, Mathura',
         coordinates: { lat: 27.5250, lng: 77.6750 },
         rating: 4.5,
@@ -226,7 +226,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'sushila-hosp',
         name: 'Sushila Hospital',
-        image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1000&sig=13',
+        image: 'https://images.unsplash.com/photo-1626307416562-ee83332468f7?auto=format&fit=crop&q=80&w=1000',
         address: 'Krishna Nagar, Mathura',
         coordinates: { lat: 27.4950, lng: 77.6750 },
         rating: 4.6,
@@ -242,7 +242,7 @@ export const HOSPITALS: Hospital[] = [
     {
         id: 'ashok-hosp',
         name: 'Ashok Hospital',
-        image: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&q=80&w=1000&sig=14',
+        image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1000',
         address: 'Dampier Nagar, Mathura',
         coordinates: { lat: 27.4980, lng: 77.6950 },
         rating: 4.7,

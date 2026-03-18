@@ -6,6 +6,7 @@ import { LayoutGrid, Map as MapIcon } from 'lucide-react';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { HOSPITALS } from '../../lib/mockData';
+import { REAL_HOSPITALS } from '../../lib/realHospitalData';
 
 const LIBRARIES: ("places" | "drawing" | "geometry" | "visualization")[] = ["places"];
 const DEFAULT_HOSPITAL_IMAGE = 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000';
@@ -106,23 +107,25 @@ const HospitalList = () => {
             }));
 
             // Filter mock hospitals based on search if needed
-            const filteredMock = search 
-                ? HOSPITALS.filter(h => 
+            const baseHospitals = [...REAL_HOSPITALS, ...HOSPITALS];
+            const filteredBase = search 
+                ? baseHospitals.filter(h => 
                     h.name.toLowerCase().includes(search.toLowerCase()) || 
-                    h.services.some(s => s.toLowerCase().includes(search.toLowerCase())) ||
+                    (h.services && h.services.some(s => s.toLowerCase().includes(search.toLowerCase()))) ||
                     h.address.toLowerCase().includes(search.toLowerCase())
                   )
-                : HOSPITALS;
+                : baseHospitals;
 
             if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-                console.log("Hospitals found:", results.length);
-                setRealHospitals([...filteredMock, ...normalizedPlaces]);
+                console.log("Hospitals found via Google Maps:", results.length);
+                setRealHospitals([...filteredBase, ...normalizedPlaces]);
             } else if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-                console.log("No Google results, using mock data.");
-                setRealHospitals(filteredMock);
+                console.log("No Google results, using researched hospital data.");
+                setRealHospitals(filteredBase);
             } else {
-                console.error("Places API error:", status);
-                setRealHospitals(filteredMock);
+                console.error("Places API error (Possible Billing/Key Issue):", status);
+                // Fallback to our high-quality researched data
+                setRealHospitals(filteredBase);
             }
             setIsLoading(false);
         };
